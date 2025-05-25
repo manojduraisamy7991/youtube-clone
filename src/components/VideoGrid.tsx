@@ -1,4 +1,26 @@
+import { useState } from "react";
 import VideoCard from "./VideoCard";
+import { Button } from "./ui/button";
+import { ScrollArea, ScrollBar } from "./ui/scroll-area";
+
+const CATEGORIES = [
+  "All",
+  "Music",
+  "Mixes",
+  "Podcasts",
+  "Cinema",
+  "Ambient",
+  "News",
+  "Playlists",
+  "Meditation",
+  "Interstellar",
+  "Web Development",
+  "AI",
+  "Live",
+  "Computers",
+  "Asian music",
+  "Tourist destinations",
+];
 
 const VIDEOS = [
   {
@@ -11,6 +33,8 @@ const VIDEOS = [
     views: "120K views",
     timestamp: "3 days ago",
     duration: "15:30",
+    comments: 342,
+    likes: 12500,
   },
   {
     id: 2,
@@ -22,6 +46,8 @@ const VIDEOS = [
     views: "85K views",
     timestamp: "1 week ago",
     duration: "22:45",
+    comments: 156,
+    likes: 8700,
   },
   {
     id: 3,
@@ -33,6 +59,8 @@ const VIDEOS = [
     views: "210K views",
     timestamp: "2 weeks ago",
     duration: "32:10",
+    comments: 487,
+    likes: 19800,
   },
   {
     id: 4,
@@ -44,6 +72,8 @@ const VIDEOS = [
     views: "65K views",
     timestamp: "5 days ago",
     duration: "18:22",
+    comments: 213,
+    likes: 5400,
   },
   {
     id: 5,
@@ -55,6 +85,8 @@ const VIDEOS = [
     views: "92K views",
     timestamp: "4 days ago",
     duration: "14:15",
+    comments: 178,
+    likes: 7600,
   },
   {
     id: 6,
@@ -66,6 +98,8 @@ const VIDEOS = [
     views: "150K views",
     timestamp: "1 month ago",
     duration: "28:40",
+    comments: 412,
+    likes: 14300,
   },
   {
     id: 7,
@@ -77,6 +111,8 @@ const VIDEOS = [
     views: "78K views",
     timestamp: "2 weeks ago",
     duration: "24:55",
+    comments: 245,
+    likes: 6800,
   },
   {
     id: 8,
@@ -88,24 +124,52 @@ const VIDEOS = [
     views: "112K views",
     timestamp: "3 weeks ago",
     duration: "19:30",
+    comments: 298,
+    likes: 9200,
   },
 ];
 
 export default function VideoGrid() {
+  const [selectedCategory, setSelectedCategory] = useState("All");
+
   return (
-    <div className="grid grid-cols-1 gap-6 p-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-      {VIDEOS.map((video) => (
-        <VideoCard
-          key={video.id}
-          thumbnail={video.thumbnail}
-          title={video.title}
-          channel={video.channel}
-          channelAvatar={video.channelAvatar}
-          views={video.views}
-          timestamp={video.timestamp}
-          duration={video.duration}
-        />
-      ))}
+    <div className="flex flex-col">
+      <div className="sticky top-0 z-10 bg-background pb-2 pt-2">
+        <ScrollArea className="w-full whitespace-nowrap">
+          <div className="flex gap-2 px-4">
+            {CATEGORIES.map((category) => (
+              <Button
+                key={category}
+                variant={
+                  selectedCategory === category ? "secondary" : "outline"
+                }
+                className="rounded-full px-3 py-1 text-sm"
+                onClick={() => setSelectedCategory(category)}
+              >
+                {category}
+              </Button>
+            ))}
+          </div>
+          <ScrollBar orientation="horizontal" />
+        </ScrollArea>
+      </div>
+
+      <div className="grid grid-cols-1 gap-4 p-4 xs:grid-cols-2 sm:gap-6 sm:p-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        {VIDEOS.map((video) => (
+          <VideoCard
+            key={video.id}
+            thumbnail={video.thumbnail}
+            title={video.title}
+            channel={video.channel}
+            channelAvatar={video.channelAvatar}
+            views={video.views}
+            timestamp={video.timestamp}
+            duration={video.duration}
+            comments={video.comments}
+            likes={video.likes}
+          />
+        ))}
+      </div>
     </div>
   );
 }
