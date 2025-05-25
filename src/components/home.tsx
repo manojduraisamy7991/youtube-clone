@@ -4,6 +4,7 @@ import Sidebar from "./Sidebar";
 import VideoGrid from "./VideoGrid";
 import { Menu } from "lucide-react";
 import { Button } from "./ui/button";
+import { cn } from "@/lib/utils";
 
 function Home() {
   const [isMobile, setIsMobile] = useState(false);
@@ -33,21 +34,28 @@ function Home() {
     <div className="flex h-screen flex-col bg-background">
       <Header />
       <div className="flex flex-1 overflow-hidden">
-        {/* Mobile sidebar toggle button */}
-        {isMobile && showMobileSidebar && (
+        {/* Mobile sidebar overlay */}
+        {showMobileSidebar && (
           <div
-            className="fixed inset-0 z-40 bg-black bg-opacity-50"
+            className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm transition-opacity duration-300"
             onClick={() => setShowMobileSidebar(false)}
           />
         )}
 
-        {/* Sidebar - now with showMobile prop */}
+        {/* Sidebar */}
         <Sidebar
           collapsed={isTablet}
           showMobile={isMobile && showMobileSidebar}
         />
 
-        <main className="flex-1 overflow-y-auto">
+        {/* Main content */}
+        <main
+          className={cn(
+            "flex-1 overflow-y-auto transition-[margin] duration-300",
+            isTablet ? "sm:ml-[72px]" : "lg:ml-64"
+          )}
+        >
+          {/* Mobile menu button */}
           <div className="sticky top-0 z-30 flex items-center bg-background p-2 md:hidden">
             <Button
               variant="ghost"
@@ -57,6 +65,8 @@ function Home() {
               <Menu className="h-5 w-5" />
             </Button>
           </div>
+
+          {/* Video grid */}
           <VideoGrid />
         </main>
       </div>

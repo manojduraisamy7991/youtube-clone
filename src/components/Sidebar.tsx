@@ -31,7 +31,7 @@ function SidebarItem({
   return (
     <div
       className={cn(
-        "flex cursor-pointer items-center rounded-lg hover:bg-secondary",
+        "flex cursor-pointer items-center rounded-lg hover:bg-secondary transition-colors duration-200",
         compact ? "flex-col gap-1 px-2 py-4" : "gap-5 px-3 py-3",
         active && "font-medium bg-secondary",
       )}
@@ -58,7 +58,11 @@ export default function Sidebar({
   if (collapsed) {
     return (
       <aside
-        className={`fixed top-[57px] ${showMobile ? "block" : "hidden"} h-[calc(100vh-57px)] w-[72px] overflow-y-auto border-r bg-background p-1 z-50 sm:block lg:hidden`}
+        className={cn(
+          "fixed top-[57px] h-[calc(100vh-57px)] w-[72px] overflow-y-auto border-r bg-background p-1 transition-all duration-300 ease-in-out",
+          showMobile ? "translate-x-0" : "-translate-x-full",
+          "z-[60] sm:translate-x-0 sm:block lg:hidden"
+        )}
       >
         <div className="flex flex-col">
           <SidebarItem icon={<Home size={24} />} title="Home" active compact />
@@ -72,7 +76,11 @@ export default function Sidebar({
 
   return (
     <aside
-      className={`fixed top-[57px] ${showMobile ? "block" : "hidden"} h-[calc(100vh-57px)] w-64 overflow-y-auto border-r bg-background p-2 z-50 lg:block`}
+      className={cn(
+        "fixed top-[57px] h-[calc(100vh-57px)] w-64 overflow-y-auto border-r bg-background p-2 transition-all duration-300 ease-in-out",
+        showMobile ? "translate-x-0" : "-translate-x-full",
+        "z-[60] lg:translate-x-0 lg:block"
+      )}
     >
       <div className="mb-4 flex flex-col gap-1">
         <SidebarItem icon={<Home size={24} />} title="Home" active />

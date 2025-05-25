@@ -154,7 +154,7 @@ export default function VideoGrid() {
         </ScrollArea>
       </div>
 
-      <div className="grid grid-cols-1 gap-4 p-4 xs:grid-cols-2 sm:gap-6 sm:p-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      <div className="grid auto-rows-fr grid-cols-1 gap-4 p-4 xs:grid-cols-2 sm:gap-6 sm:p-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
         {VIDEOS.map((video) => (
           <VideoCard
             key={video.id}
